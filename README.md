@@ -1,4 +1,5 @@
-![Csv_Reader (1)](https://github.com/MaciejPuchalskii/CsvReader/assets/116656797/f34544d7-e049-488d-b618-8b203319f804)
+![Csv_Reader (2)](https://github.com/MaciejPuchalskii/CsvReader/assets/116656797/725c5fab-5c44-4425-8ae4-f17365838388)
+
 # CSV Documents reader
 ![GitHub last commit](https://img.shields.io/github/last-commit/MaciejPuchalskii/CsvReader)
 
