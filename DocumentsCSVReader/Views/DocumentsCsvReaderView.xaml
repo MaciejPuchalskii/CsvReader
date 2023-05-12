@@ -13,8 +13,8 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Height="40">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0" VerticalAlignment="Bottom">
                 <TextBlock x:Name="Documentstext" Margin="5 0 0 0" Text="Documents" FontSize="20"/>
@@ -36,13 +36,11 @@
         </Grid>
         <Grid x:Name="MainGrid" Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
             <components:DocumentsListing Grid.ColumnSpan="2" Grid.RowSpan="2" x:Name="documentsDisplayControl" />
-            <!--<components:DocumentItemsListing Grid.Column="1" x:Name="documentItemDetailsControl" />-->
-
         </Grid>
     </Grid>
 </UserControl>

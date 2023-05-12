@@ -68,10 +68,12 @@ namespace DocumentsCSVReader.Views
         }
         private void UploadDocumentsButton_Click_1(object sender, RoutedEventArgs e)
         {
-            Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
-            openFileDialog.Filter = "CSV files (*.csv)|*.csv";
+            Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog
+            {
+                Filter = "CSV files (*.csv)|*.csv"
+            };
 
-            string solutionPath = System.IO.Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory);
+            string solutionPath = Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory);
 
             string parentDirPath = Directory.GetParent(solutionPath).FullName;
 
@@ -105,7 +107,7 @@ namespace DocumentsCSVReader.Views
 
             SendDataEvent.Invoke(documents, documentItems);
         }
-        private void DocumentsCsvReaderView_SendDataEvent(System.Collections.Generic.List<Models.Document> documents, System.Collections.Generic.List<Models.DocumentItem> documentItems)
+        private void DocumentsCsvReaderView_SendDataEvent(List<Document> documents, List<DocumentItem> documentItems)
         {
             documentsDisplayControl.ReceiveData(documents, documentItems);
         }

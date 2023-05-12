@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.IO;
+using System.Data;
 
 
 namespace DocumentsCSVReader.Services
@@ -23,7 +24,7 @@ namespace DocumentsCSVReader.Services
 
         public void OpenConnection()
         {
-            if (myConnnection.State != System.Data.ConnectionState.Open)
+            if (myConnnection.State != ConnectionState.Open)
             {
                 myConnnection.Open();
             }
@@ -31,7 +32,7 @@ namespace DocumentsCSVReader.Services
 
         public void CloseConnection()
         {
-            if (myConnnection.State != System.Data.ConnectionState.Closed)
+            if (myConnnection.State != ConnectionState.Closed)
             {
                 myConnnection.Close();
             }
@@ -43,9 +44,9 @@ namespace DocumentsCSVReader.Services
             OpenConnection();
 
             string insertQuery = "INSERT INTO Documents (Id,Type, Date, FirstName, LastName, City) VALUES (@Id,@Type, @Date, @FirstName, @LastName, @City)";
+            SQLiteCommand insertCommand = new SQLiteCommand(insertQuery, myConnnection);
             foreach (var document in documents)
             {
-                SQLiteCommand insertCommand = new SQLiteCommand(insertQuery, myConnnection);
                 insertCommand.Parameters.AddWithValue("@Id", document.Id);
                 insertCommand.Parameters.AddWithValue("@Type", document.Type);
                 insertCommand.Parameters.AddWithValue("@Date", document.Date);
@@ -63,10 +64,10 @@ namespace DocumentsCSVReader.Services
         {
             OpenConnection();
 
+            string insertQuery = "INSERT INTO DocumentItems (DocumentId, Ordinal, Product,Quantity,Price,TaxRate) VALUES (@DocumentId, @Ordinal, @Product,@Quantity,@Price,@TaxRate)";
+            SQLiteCommand insertCommand = new SQLiteCommand(insertQuery, myConnnection);
             foreach (var documentItem in documentItems)
             {
-                string insertQuery = "INSERT INTO DocumentItems (DocumentId, Ordinal, Product,Quantity,Price,TaxRate) VALUES (@DocumentId, @Ordinal, @Product,@Quantity,@Price,@TaxRate)";
-                SQLiteCommand insertCommand = new SQLiteCommand(insertQuery, myConnnection);
                 insertCommand.Parameters.AddWithValue("@DocumentId", documentItem.DocumentId);
                 insertCommand.Parameters.AddWithValue("@Ordinal", documentItem.Ordinal);
                 insertCommand.Parameters.AddWithValue("@Product", documentItem.Product);
@@ -84,22 +85,22 @@ namespace DocumentsCSVReader.Services
             OpenConnection();
 
             string selectQuery = "SELECT * FROM Documents";
-            SQLiteCommand command = new SQLiteCommand(selectQuery, myConnnection);
-            SQLiteDataReader reader = command.ExecuteReader();
+            SQLiteCommand selectCommand = new SQLiteCommand(selectQuery, myConnnection);
+            SQLiteDataReader reader = selectCommand.ExecuteReader();
 
             List<Document> documents = new List<Document>();
             while (reader.Read())
             {
                 int id = Convert.ToInt32(reader["ID"]);
-                string Type = Convert.ToString(reader["Type"]);
-                string Date = Convert.ToString(reader["Date"]);
-                string FirstName = Convert.ToString(reader["FirstName"]);
-                string LastName = Convert.ToString(reader["LastName"]);
-                string City = Convert.ToString(reader["City"]);
+                string type = Convert.ToString(reader["Type"]);
+                string date = Convert.ToString(reader["Date"]);
+                string firstName = Convert.ToString(reader["FirstName"]);
+                string lastName = Convert.ToString(reader["LastName"]);
+                string city = Convert.ToString(reader["City"]);
 
 
 
-                Document document = new Document(id, Type, Date, FirstName, LastName,City);
+                Document document = new Document(id, type, date, firstName, lastName, city);
              
                 documents.Add(document);
             }
@@ -115,21 +116,21 @@ namespace DocumentsCSVReader.Services
             OpenConnection();
 
             string selectQuery = "SELECT * FROM DocumentItems";
-            SQLiteCommand command = new SQLiteCommand(selectQuery, myConnnection);
-            SQLiteDataReader reader = command.ExecuteReader();
+            SQLiteCommand selectCommand = new SQLiteCommand(selectQuery, myConnnection);
+            SQLiteDataReader reader = selectCommand.ExecuteReader();
 
             List<DocumentItem> documentItems = new List<DocumentItem>();
             while (reader.Read())
             {
-                int DocumentId = Convert.ToInt32(reader["DocumentId"]);
-                int Ordinal = Convert.ToInt32(reader["Ordinal"]);
-                string ProductName = Convert.ToString(reader["Product"]);
-                int Quantity = Convert.ToInt32(reader["Quantity"]);
-                double Price = Convert.ToDouble(reader["Price"]);
-                int TaxRate = Convert.ToInt32(reader["TaxRate"]);
+                int documentId = Convert.ToInt32(reader["DocumentId"]);
+                int ordinal = Convert.ToInt32(reader["Ordinal"]);
+                string productName = Convert.ToString(reader["Product"]);
+                int quantity = Convert.ToInt32(reader["Quantity"]);
+                double price = Convert.ToDouble(reader["Price"]);
+                int taxRate = Convert.ToInt32(reader["TaxRate"]);
 
 
-                DocumentItem documentItem = new DocumentItem(DocumentId,Ordinal,ProductName,Quantity, Price, TaxRate);
+                DocumentItem documentItem = new DocumentItem(documentId,ordinal,productName,quantity, price, taxRate);
                 documentItems.Add(documentItem);
             }
 

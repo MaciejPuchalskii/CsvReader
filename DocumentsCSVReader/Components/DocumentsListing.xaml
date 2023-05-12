@@ -46,7 +46,7 @@
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Grid.Column="0" FontWeight="Bold" FontSize="14" Text="Type: "/>
-                        <TextBlock x:Name="TypeText" Grid.Column="1" FontSize="14"/>
+                        <TextBlock x:Name="TypeText" Text="Unknown"  Grid.Column="1" FontSize="14"/>
 
                     </Grid>
                     <Grid Grid.Row="2">
@@ -57,7 +57,7 @@
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Grid.Column="0" FontSize="14" FontWeight="Bold" Text="Date: "/>
-                        <TextBlock x:Name="DateText" Grid.Column="1" FontSize="14"/>
+                    <TextBlock x:Name="DateText" Text="Unknown" Grid.Column="1" FontSize="14"/>
 
                     </Grid>
                     <Grid Grid.Row="3">
@@ -68,7 +68,7 @@
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Grid.Column="0" FontSize="14" FontWeight="Bold" Text="City: "/>
-                        <TextBlock x:Name="CityText" Grid.Column="1" FontSize="14" />
+                    <TextBlock x:Name="CityText" Text="Unknown" Grid.Column="1" FontSize="14" />
                     </Grid>
                     <Grid Grid.Row="4" >
 
