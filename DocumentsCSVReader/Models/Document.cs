@@ -9,7 +9,7 @@
         public string LastName { get; set; }
         public string City { get; set;  }
 
-        public string FullName => FirstName + " " + LastName;
+        public string FullName => $"{FirstName} {LastName}";
         public Document(){}
         public Document(int id, string type, string date, string firstName, string lastName, string city)
         {
