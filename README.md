@@ -4,4 +4,4 @@
 
 App to read csv files with documents and document items, working with relational SQLite Database. 
 
-![image](https://github.com/MaciejPuchalskii/CsvReader/assets/116656797/cdc0adc1-6286-442c-bc8a-1b39ef226bc2)
+![image](https://github.com/MaciejPuchalskii/CsvReader/assets/116656797/5bf736fe-b2df-4d3c-bd59-e44234439674)
