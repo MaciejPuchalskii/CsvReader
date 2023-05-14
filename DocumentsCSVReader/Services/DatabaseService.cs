@@ -5,6 +5,9 @@ using System.Collections.Generic;
 using System.Data.SQLite;
 using System.IO;
 using System.Data;
+using static System.Net.Mime.MediaTypeNames;
+using System.Windows.Markup;
+using System.Diagnostics;
 
 
 namespace DocumentsCSVReader.Services
@@ -16,13 +19,38 @@ namespace DocumentsCSVReader.Services
       
         public DatabaseService()
         {
-            if (!File.Exists("././Documentsdb"))
-            {
-                myConnnection = new SQLiteConnection("Data Source=Documents.db");
-            }
+            
+            myConnnection = new SQLiteConnection("Data Source=Documents.db");   
+            string createTableDocumentItemsCommand = @"CREATE TABLE IF NOT EXISTS DocumentItems(
+                                                               DocumentId   INTEGER,
+                                                               Ordinal   INTEGER,
+                                                               Product   TEXT,
+                                                               Quantity  INTEGER,
+                                                               Price REAL,
+                                                               TaxRate   INTEGER,
+                                                               FOREIGN KEY(DocumentId) REFERENCES Documents(Id));";
+
+            string createTableDocumentCommand = @"CREATE TABLE IF NOT EXISTS Documents(
+                                                               Id INTEGER UNIQUE,
+                                                               Type	TEXT,
+                                                               Date	TEXT,
+                                                               FirstName TEXT,
+                                                               LastName	TEXT,
+                                                               City	TEXT,
+                                                               PRIMARY KEY(Id));";
+
+           
+                OpenConnection();
+                SQLiteCommand createTableD = new SQLiteCommand(createTableDocumentCommand, myConnnection);
+                SQLiteCommand createTableDI = new SQLiteCommand(createTableDocumentItemsCommand, myConnnection);
+                createTableDI.ExecuteNonQuery();
+                createTableD.ExecuteNonQuery();
+                CloseConnection();
+            
         }
 
-        public void OpenConnection()
+
+        private void OpenConnection()
         {
             if (myConnnection.State != ConnectionState.Open)
             {
@@ -30,7 +58,7 @@ namespace DocumentsCSVReader.Services
             }
         }
 
-        public void CloseConnection()
+        private void CloseConnection()
         {
             if (myConnnection.State != ConnectionState.Closed)
             {
@@ -83,7 +111,7 @@ namespace DocumentsCSVReader.Services
         public IEnumerable<Document> GetDocuments()
         {
             OpenConnection();
-
+            
             string selectQuery = "SELECT * FROM Documents";
             SQLiteCommand selectCommand = new SQLiteCommand(selectQuery, myConnnection);
             SQLiteDataReader reader = selectCommand.ExecuteReader();

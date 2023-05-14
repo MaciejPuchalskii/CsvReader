@@ -1,6 +1,7 @@
 ﻿using DocumentsCSVReader.Services.Interfaces;
 using DocumentsCSVReader.Models;
 using System.Linq;
+using System;
 
 namespace DocumentsCSVReader.Services
 {
@@ -11,16 +12,14 @@ namespace DocumentsCSVReader.Services
 
         public DocumentService(IDatabaseService databaseService, IFileReader fileReader)
         {
-            this._databaseService = databaseService;
-            this._fileReader = fileReader;
+            _databaseService = databaseService;
+            _fileReader = fileReader;
         }
-
 
         public bool UploadDocumentsToDataBase(string filePath)
         {
             try
             {
-                
                 var documents = _fileReader.ReadData<Document>(filePath);
                 if(documents.Any())
                 {
@@ -29,10 +28,11 @@ namespace DocumentsCSVReader.Services
                 return true;
 
             }
-            catch
+            catch(Exception e)
             {
                 return false;
             }
+           
         }
 
         public bool UploadDocumentItemsToDataBase(string filePath)
@@ -46,7 +46,7 @@ namespace DocumentsCSVReader.Services
                 }
                 return true;
             }
-            catch 
+            catch(Exception e)
             {
 
                 return false;

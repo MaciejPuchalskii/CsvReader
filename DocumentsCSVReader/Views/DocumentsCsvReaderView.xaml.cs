@@ -35,6 +35,7 @@ namespace DocumentsCSVReader.Views
         }
         private void UploadItemsButton_Click(object sender, RoutedEventArgs e)
         {
+           
             Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog
             {
                 Filter = "CSV files (*.csv)|*.csv"
@@ -60,7 +61,7 @@ namespace DocumentsCSVReader.Views
                 else
                 {
                     // Otwiera okienko informacja nie udalo sie
-                    MessageBox.Show("Operation failed.", "Failure", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Failed upload items to db.", "Failure", MessageBoxButton.OK, MessageBoxImage.Error);
 
                 }
             }
@@ -87,13 +88,11 @@ namespace DocumentsCSVReader.Views
                 var uploadResult = _documentService.UploadDocumentsToDataBase(selectedFilePath);
                 if (uploadResult)
                 {
-                    // Otwiera okienko informacja udalo sie
                     MessageBox.Show("Operation succeeded.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
                 {
-                    // Otwiera okienko informacja nie udalo sie
-                    MessageBox.Show("Operation failed.", "Failure", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Failed upload documents to db.", "Failure", MessageBoxButton.OK, MessageBoxImage.Error);
 
                 }
             }
@@ -102,8 +101,22 @@ namespace DocumentsCSVReader.Views
 
         private void ReadDataFromDBButton_Click(object sender, RoutedEventArgs e)
         {
-            documents = _databaseService.GetDocuments().ToList();
-            documentItems = _databaseService.GetDocumentItems().ToList();
+            try
+            {
+                documents = _databaseService.GetDocuments().ToList();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Failed reading Documents", "Failure", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            try 
+            {
+                documentItems = _databaseService.GetDocumentItems().ToList();
+            }
+            catch
+            {
+                MessageBox.Show("Failed reading Items.", "Failure", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
 
             SendDataEvent.Invoke(documents, documentItems);
         }
